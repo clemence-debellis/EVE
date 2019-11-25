@@ -1,4 +1,3 @@
-
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
@@ -10,9 +9,7 @@ public class Avancer
 {
     private EV3LargeRegulatedMotor mLeftMotor;
     private EV3LargeRegulatedMotor mRightMotor;
-
-    private int SPEED = 500; // a adapter on verra plus tard mdr
-
+    public int SPEED =500;
 
     public Avancer(Port left_port, Port right_port)
     {
@@ -25,6 +22,11 @@ public class Avancer
     }
 
 
+    public void setspeed(int i) {
+    	 mLeftMotor.setSpeed(i);
+         mRightMotor.setSpeed(i);
+    }
+    
     public void avancer(){
     	mLeftMotor.startSynchronization();
         mLeftMotor.forward();
@@ -47,13 +49,11 @@ public class Avancer
         mLeftMotor.endSynchronization();
     }
     
-    public void tcsD(int  v) {
-    
-    	SPEED =v;
-    	
+    public void rotateAsynch(int angle) {
+
     	mLeftMotor.startSynchronization();
-        mLeftMotor.backward();
-        mRightMotor.forward();
+        mLeftMotor.rotate(angle, true);
+        mRightMotor.rotate(-angle, true);
         mLeftMotor.endSynchronization();
         
         Delay.msDelay(1510);
@@ -65,9 +65,8 @@ public class Avancer
         
     	
     }
-    public void tcsG(int v) {
+    public void rotateG() {
     	
-    	SPEED =v;
         
     	mLeftMotor.startSynchronization();
         mLeftMotor.forward();
@@ -75,6 +74,23 @@ public class Avancer
         mLeftMotor.endSynchronization();
         
         Delay.msDelay(1510);
+        
+        mLeftMotor.startSynchronization();
+        mLeftMotor.stop();
+        mRightMotor.stop();
+        mLeftMotor.endSynchronization();
+        
+    	
+    }
+    
+    public void rotation() {
+    	
+    	mLeftMotor.startSynchronization();
+        mLeftMotor.forward();
+        mRightMotor.backward();
+        mLeftMotor.endSynchronization();
+        
+        Delay.msDelay(100);
         
         mLeftMotor.startSynchronization();
         mLeftMotor.stop();

@@ -1,4 +1,4 @@
-import java.io.FileOutputStream;
+/*import java.io.FileOutputStream;
 
 import lejos.hardware.Button;
 import lejos.hardware.port.SensorPort;
@@ -21,3 +21,4 @@ public class Position {
 		}
 	}
 }
+**/

@@ -26,6 +26,10 @@ public class LAvue extends EV3UltrasonicSensor{
 		SampleProvider distance= this.getMode("Distance");
 		float[] sample = new float[distance.sampleSize()];
 		distance.fetchSample(sample, 0);
+		if(sample[0] == 0)
+			return 100;
+		
+		else
 		 return sample[0];
 	}
 }
