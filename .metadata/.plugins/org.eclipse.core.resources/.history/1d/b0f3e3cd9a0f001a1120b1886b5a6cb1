@@ -41,20 +41,33 @@ public class Test {
 		
 		//TestColor.colorimetrie();	
 			
-
+			RegulatedMotor mLeft = new EV3LargeRegulatedMotor (MotorPort.C);
+			RegulatedMotor mRight= new EV3LargeRegulatedMotor (MotorPort.B);
+			RegulatedMotor pinces= new EV3LargeRegulatedMotor (MotorPort.D);
 			
-			ArrayList couleur =new ArrayList();
-			int i=0;	
+		//	ArrayList couleur =new ArrayList();
+			//int i=0;	
+			
+			mLeft.forward();
+			mRight.forward();
 		
-		
-			while(Button.ENTER.isUp()) {
+			while((!(TestColor.getColor(colore, tab)).equals("white"))&& Button.ENTER.isUp()) {
 				float[] tab= TestColor.getEchant();	
-				couleur.add(TestColor.getColor(colore,tab));
+				//couleur.add(TestColor.getColor(colore,tab));
+				
 				Delay.msDelay(2000);
 
 				//System.out.println(couleur.get(i));
 				//i++;
 			}
+			
+			mLeft.stop();
+			mRight.stop();
+			pinces.forward();
+			Delay.msDelay(3000);
+			pinces.stop();
+			mLeft.rotate(180);
+			mRight.rotate(-180);
 			}
 	}
 	
