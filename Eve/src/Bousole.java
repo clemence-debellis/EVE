@@ -9,7 +9,7 @@ public class Bousole {
 		orientation=0;
 	}
 	
-	public void orienter (int angle) {
+	public void orienter (int angle) { // additionne les 2 angles 
 		if(angle<0) {
 			orientation=((360+orientation)+angle)%360;
 		}
@@ -18,7 +18,7 @@ public class Bousole {
 		}
 	}
 	
-	public int nouvelAngle (int angle) {
+	public int nouvelAngle (int angle) { // met la valeur de l'ancien angle à la valeur du nouvel angle
 		int orien2=orientation;
 		orientation=angle;
 		int res = orien2-angle;
