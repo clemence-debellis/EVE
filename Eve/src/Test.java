@@ -26,6 +26,15 @@ public class Test {
 		}
 		roues.stop();
 	}
+	
+	public void ReculerTantQue(double f){
+
+		roues.setspeed(300);
+		while (vue.getDistance()>=f && Button.ENTER.isUp()){
+			roues.reculer();
+		}
+		roues.stop();
+	}
 
 	public void AvancerTantQue(boolean b){
 		if (b==true)
@@ -51,6 +60,7 @@ public class Test {
 	}
 
 	public void DetectionDunObjet() {
+		CaptTactile capt = new CaptTactile();
 		roues.setspeed(50);
 		int i = 0;
 		boolean b;
@@ -65,8 +75,11 @@ public class Test {
 			
 			b = this.PALET();
 			if(b) {
-				roues.stop();
-				i=1;
+				capt.avancerJusquePalet(roues);
+			}
+			
+			else {
+				this.roues.ReculerTantQue(0.37);
 			}
 		}
 	}

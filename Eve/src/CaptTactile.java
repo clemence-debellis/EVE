@@ -12,11 +12,11 @@ import lejos.robotics.TouchAdapter;
 
 public class CaptTactile extends EV3TouchSensor{
 
-	Avancer aa = new Avancer(MotorPort.B,MotorPort.C);
 	RegulatedMotor pinces= new EV3LargeRegulatedMotor (MotorPort.D);
+	 public int SPEED =500;
 
-	public CaptTactile(Port port){
-		super(port);
+	public CaptTactile(){
+		super(SensorPort.S1);
 	}
 
 	public boolean isPressed(){
@@ -25,16 +25,25 @@ public class CaptTactile extends EV3TouchSensor{
 
 		return sample[0] != 0;
 	}
+	
+	public void OuvertureDesPinces(){
+		pinces.forward();
+		Delay.msDelay(250);
+		pinces.stop();
+	}
 
-	public void avancerJusquePalet() {
+	public void FermetureDesPinces(){
+
+	}
+
+	public void avancerJusquePalet(Avancer aa) {
+		this.OuvertureDesPinces();
 		aa.avancer();
 		while (this.isPressed()==false) {
 			Delay.msDelay(100);
 		}
 		aa.stop();
-		pinces.backward();
-		Delay.msDelay(250);
-		pinces.stop();
+		this.FermetureDesPinces();
 	}
 }
 
