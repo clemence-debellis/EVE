@@ -8,7 +8,6 @@ import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
-
 public class LAvue extends EV3UltrasonicSensor{
 	public static void main(String[] args) {
 			
@@ -16,7 +15,6 @@ public class LAvue extends EV3UltrasonicSensor{
 			//Delay.msDelay(500);
 			//System.out.println(vue.getDistance());
 		}
-	
 	
 	public LAvue(Port port){
 		super(port);

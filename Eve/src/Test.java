@@ -76,7 +76,7 @@ public class Test {
 			while(i==0) {
 			if(vue.getDistance() < 0.5){
 				roues.stop();
-				roues.rotateAsynch(-100);
+				roues.rotateAsynch(-20);
 				this.AvancerTantQue(0.40);
 				i++;
 			}
