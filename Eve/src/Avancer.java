@@ -10,7 +10,8 @@ public class Avancer
     private EV3LargeRegulatedMotor mLeftMotor;
     private EV3LargeRegulatedMotor mRightMotor;
 
-    private int SPEED = 500;
+    private int SPEED = 500; // a adapter on verra plus tard mdr
+
 
     public Avancer(Port left_port, Port right_port)
     {
