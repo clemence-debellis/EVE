@@ -21,7 +21,7 @@ public class Test {
 	public void AvancerTantQue(double f){
 
 		roues.setspeed(300);
-		while (vue.getDistance()>=f && Button.ENTER.isUp()){
+		while (vue.getDistance()>= f && Button.ENTER.isUp()){
 			roues.avancer();
 		}
 		roues.stop();
@@ -44,11 +44,15 @@ public class Test {
 
 	public boolean PALET(){
 		float dd = vue.getDistance();
+		System.out.println(dd);
+		Delay.msDelay(1000);
 		roues.setspeed(50);
 		roues.avancer();
 		Delay.msDelay(2000);
 		roues.stop();
 		float gg = vue.getDistance();
+		System.out.println(gg);
+		Delay.msDelay(1000);
 		
 
 		if((gg - dd) > 0) {
@@ -65,21 +69,29 @@ public class Test {
 		int i = 0;
 		boolean b;
 
-		while( Button.ENTER.isUp() && i==0){
-
+		while( Button.ENTER.isUp()){
+			roues.setspeed(40);
 			roues.rotateAsynch(1000);
-			if(vue.getDistance()>0){
-				roues.stop();
-				this.AvancerTantQue(0.37);
-			}
 			
+			while(i==0) {
+			if(vue.getDistance() < 0.5){
+				roues.stop();
+				roues.rotateAsynch(-100);
+				this.AvancerTantQue(0.40);
+				i++;
+			}
+			}
+			i=0;
 			b = this.PALET();
 			if(b) {
 				capt.avancerJusquePalet(roues);
+				i++;
 			}
 			
 			else {
-				this.roues.ReculerTantQue(0.37);
+				roues.reculer();
+				Delay.msDelay(2000);
+				roues.stop();
 			}
 		}
 	}

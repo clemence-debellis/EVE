@@ -28,16 +28,20 @@ public class CaptTactile extends EV3TouchSensor{
 	
 	public void OuvertureDesPinces(){
 		pinces.forward();
-		Delay.msDelay(250);
+		Delay.msDelay(2000);
 		pinces.stop();
 	}
 
 	public void FermetureDesPinces(){
+		pinces.backward();
+		Delay.msDelay(2000);
+		pinces.stop();
 
 	}
 
 	public void avancerJusquePalet(Avancer aa) {
 		this.OuvertureDesPinces();
+		aa.setspeed(500);
 		aa.avancer();
 		while (this.isPressed()==false) {
 			Delay.msDelay(100);
