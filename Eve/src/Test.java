@@ -6,7 +6,7 @@ import lejos.utility.Delay;
 public class Test {
 	Avancer roues;
 	LAvue vue;
-	
+
 	public static void main(String[] args) {
 		Test w = new Test();
 		w.DetectionDunObjet();
@@ -16,8 +16,8 @@ public class Test {
 		roues = new Avancer(MotorPort.B,MotorPort.C);
 		vue = new LAvue(SensorPort.S3);
 	}
-	
-	
+
+
 	public void AvancerTantQue(double f){
 
 		roues.setspeed(300);
@@ -26,7 +26,7 @@ public class Test {
 		}
 		roues.stop();
 	}
-	
+
 	public void ReculerTantQue(double f){
 
 		roues.setspeed(300);
@@ -53,7 +53,7 @@ public class Test {
 		float gg = vue.getDistance();
 		System.out.println(gg);
 		Delay.msDelay(1000);
-		
+
 
 		if((gg - dd) > 0) {
 			return true;
@@ -64,38 +64,43 @@ public class Test {
 	}
 
 	public void DetectionDunObjet() {
-		CaptTactile capt = new CaptTactile();
-		roues.setspeed(50);
 		int i = 0;
-		boolean b;
-
-		while( Button.ENTER.isUp()){
-			roues.setspeed(40);
-			roues.rotateAsynch(1000);
-			
-			while(i==0) {
+		roues.setspeed(40);
+		roues.rotateAsynch(1000);
+		while(i==0) {
 			if(vue.getDistance() < 0.5){
 				roues.stop();
 				roues.rotateAsynch(-20);
 				this.AvancerTantQue(0.40);
 				i++;
 			}
-			}
-			i=0;
-			b = this.PALET();
-			if(b) {
-				capt.avancerJusquePalet(roues);
-				i++;
-			}
-			
-			else {
-				roues.reculer();
-				Delay.msDelay(2000);
-				roues.stop();
-			}
 		}
 	}
 
+
+
+	public void DetectionDunPalet() {
+		CaptTactile capt = new CaptTactile();
+		roues.setspeed(50);
+		int i = 0;
+		boolean b;
+
+		while( Button.ENTER.isUp()){ // à modifier 
+
+			this.DetectionDunObjet();
+
+			b = this.PALET();
+			if(b) {
+				capt.avancerJusquePalet(roues);
+			}
+
+			else {
+				roues.reculerTemps(2000);
+
+			}
+		}
+
+	}
 }
 
 

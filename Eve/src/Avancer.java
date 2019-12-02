@@ -49,6 +49,21 @@ public class Avancer
         mLeftMotor.endSynchronization();
     }
     
+    public void reculerTemps(int i)
+    {
+    	mLeftMotor.startSynchronization();
+        mLeftMotor.backward();
+        mRightMotor.backward();
+        mLeftMotor.endSynchronization();
+        
+        Delay.msDelay(2000);
+        
+        mLeftMotor.startSynchronization();
+        mLeftMotor.stop();
+        mRightMotor.stop();
+        mLeftMotor.endSynchronization();
+    }
+    
     public void rotateAsynch(int angle) {
 
     	mLeftMotor.startSynchronization();
