@@ -11,10 +11,10 @@ public class Avancer
     private EV3LargeRegulatedMotor mRightMotor;
     public int SPEED =500;
 
-    public Avancer(Port left_port, Port right_port)
+    public Avancer()
     {
-        mLeftMotor = new EV3LargeRegulatedMotor(left_port);
-        mRightMotor = new EV3LargeRegulatedMotor(right_port);
+        mLeftMotor = new EV3LargeRegulatedMotor(MotorPort.B);
+        mRightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         mLeftMotor.synchronizeWith(new RegulatedMotor[]{mRightMotor});
 
         mLeftMotor.setSpeed(SPEED);

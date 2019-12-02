@@ -1,5 +1,6 @@
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
@@ -12,8 +13,8 @@ import lejos.robotics.TouchAdapter;
 
 public class CaptTactile extends EV3TouchSensor{
 
-	RegulatedMotor pinces= new EV3LargeRegulatedMotor (MotorPort.D);
-	 public int SPEED =500;
+	static RegulatedMotor pinces= new EV3MediumRegulatedMotor (MotorPort.D);
+	public int SPEED =500;
 
 	public CaptTactile(){
 		super(SensorPort.S1);
@@ -26,13 +27,13 @@ public class CaptTactile extends EV3TouchSensor{
 		return sample[0] != 0;
 	}
 	
-	public void OuvertureDesPinces(){
+	public static void OuvertureDesPinces(){
 		pinces.forward();
 		Delay.msDelay(2000);
 		pinces.stop();
 	}
 
-	public void FermetureDesPinces(){
+	public static void FermetureDesPinces(){
 		pinces.backward();
 		Delay.msDelay(2000);
 		pinces.stop();

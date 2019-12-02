@@ -3,7 +3,9 @@ public class ProgrammeFinal {
 	public static void main(String[] args) {
 		
 		Test w = new Test();
-		w.DetectionDunObjet();
-	}
+		CaptTactile capt = new CaptTactile();
+		capt.OuvertureDesPinces();
+		capt.FermetureDesPinces();
 
+	}
 }

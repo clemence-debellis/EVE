@@ -8,8 +8,6 @@ public class LEtoucher extends EV3TouchSensor {
 	        super(port);
 	    }
 
-	  
-	  
 	    public boolean isPressed()
 	    {
 	        float[] sample = new float[1];
