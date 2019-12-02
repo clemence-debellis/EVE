@@ -16,8 +16,14 @@ import java.io.*;
 
 public class TestColor {
 	
-private static Port port=LocalEV3.get().getPort("S4");
-private static EV3ColorSensor colorSensor = new EV3ColorSensor(port);
+	
+private Port port;//=LocalEV3.get().getPort("S4");
+private static EV3ColorSensor colorSensor;//= new EV3ColorSensor(port);
+
+public TestColor(Port port, EV3ColorSensor capteurCouleur) {
+	this.port = port;
+	colorSensor=capteurCouleur;
+}
 
 public static boolean goMessage() {
 		
@@ -224,12 +230,12 @@ public static boolean goMessage() {
 	}
 	//Adapter avec avancer
 	
-	public static void posePaletCamp(Properties prop) throws IOException{
+	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt) throws IOException{
 		
 		float[] tab= TestColor.getEchant();	
 		String couleur = TestColor.getColor(prop,tab);
-		Avancer couple = new Avancer(MotorPort.B, MotorPort.C);
-		couple.avancer();
+		//Avancer couple = new Avancer(MotorPort.B, MotorPort.C);
+		couple.roues.avancer();
 		while(couleur.equals("white")==false && Button.ENTER.isUp()) {
 			System.out.println(couleur);
 			Delay.msDelay(50);
@@ -237,13 +243,12 @@ public static boolean goMessage() {
 			couleur = TestColor.getColor(prop,tab);
 
 		}
-			couple.stop();
-			CaptTactile.OuvertureDesPinces();
-			couple.reculer();
-			Delay.msDelay(200);
-			couple.stop();
-			CaptTactile.FermetureDesPinces();
-
+			couple.roues.stop();
+			capt.OuvertureDesPinces();
+			couple.roues.reculer();
+			Delay.msDelay(1000);
+			couple.roues.stop();
+			capt.FermetureDesPinces();
 	}
 
 }

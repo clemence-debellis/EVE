@@ -16,7 +16,7 @@ public class Position {
 		coul=new String[60];
 		int i=0;
 		while(Button.ENTER.isUp()) {
-			colors.store(new FileOutputStream("colors"));
+		//	colors.store(new FileOutputStream("colors"));
 			
 		}
 	}
