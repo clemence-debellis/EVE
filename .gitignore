@@ -2,9 +2,13 @@
 # Edit at https://www.gitignore.io/?templates=windows,eclipse
 
 ### Eclipse ###
-.metadata
+.metadata/
+.metadata/*
+.metadata/.*
 bin/
 tmp/
+*.index
+*.txt
 *.tmp
 *.bak
 *.swp
