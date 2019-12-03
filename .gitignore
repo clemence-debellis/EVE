@@ -3,6 +3,8 @@
 
 ### Eclipse ###
 .metadata/
+.metadata/*
+.metadata/.*
 bin/
 tmp/
 *.index
