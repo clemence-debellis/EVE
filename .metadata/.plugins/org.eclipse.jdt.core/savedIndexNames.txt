@@ -22,7 +22,6 @@ INDEX VERSION 1.131+C:\Users\Margaux\Documents\GitHub\EVE\.metadata\.plugins\org
 2773834657.index
 3855420317.index
 1622776731.index
-2457037706.index
 612511169.index
 2301944148.index
 728296283.index
