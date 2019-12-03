@@ -1,0 +1,66 @@
+import java.io.IOException;
+import java.util.Properties;
+
+import lejos.hardware.Button;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.SampleProvider;
+import lejos.robotics.Touch;
+import lejos.utility.Delay;
+import lejos.robotics.TouchAdapter;
+
+public class CaptTactile extends EV3TouchSensor{
+
+	static RegulatedMotor pinces= new EV3LargeRegulatedMotor (MotorPort.D);
+	 public int SPEED =500;
+
+	public CaptTactile(){
+		super(SensorPort.S1);
+	}
+
+	public boolean isPressed(){
+		float[] sample = new float[1];
+		fetchSample(sample, 0);
+
+		return sample[0] != 0;
+	}
+	
+	public static void OuvertureDesPinces(){
+		pinces.forward();
+		Delay.msDelay(2000);
+		pinces.stop();
+	}
+
+	public static void FermetureDesPinces(){
+		pinces.backward();
+		Delay.msDelay(2000);
+		pinces.stop();
+
+	}
+
+	public void avancerJusquePalet(Avancer aa) {
+		this.OuvertureDesPinces();
+		aa.setspeed(500);
+		aa.avancer();
+		while (this.isPressed()==false) {
+			Delay.msDelay(100);
+		}
+		aa.stop();
+		this.FermetureDesPinces();
+	}
+	public void recupPremierPalet(Avancer aa, Properties prop, Test t, TestColor tc) throws IOException {
+		//Test t =new Test();
+		aa.avancer();
+		Delay.msDelay(2000);
+		aa.stop();
+		avancerJusquePalet(aa);
+		aa.rotateAsynch(45);
+		t.AvancerTantQue(0.07);
+		//trouverOuest();
+		tc.posePaletCamp(prop);
+	}
+}
