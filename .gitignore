@@ -3,6 +3,8 @@
 
 ### Eclipse ###
 /.metadata/
+/.metadata/.log
+/.metadata/version.ini
 bin/
 tmp/
 *.tmp
