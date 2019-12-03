@@ -1,5 +1,9 @@
+import java.io.IOException;
+import java.util.Properties;
+
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
@@ -12,43 +16,51 @@ import lejos.robotics.TouchAdapter;
 
 public class CaptTactile extends EV3TouchSensor{
 
-	
-	RegulatedMotor mLeft = new EV3LargeRegulatedMotor (MotorPort.C);
-	RegulatedMotor mRight= new EV3LargeRegulatedMotor (MotorPort.B);
-	RegulatedMotor pinces= new EV3LargeRegulatedMotor (MotorPort.D);
-	
-	public CaptTactile(Port port)
-    {
-        super(port);
-    }
+	 RegulatedMotor pinces= new EV3MediumRegulatedMotor(MotorPort.D);
+	 public int SPEED =800;
 
-    public boolean isPressed()
-    {
-        float[] sample = new float[1];
-        fetchSample(sample, 0);
+	public CaptTactile(){
+		super(SensorPort.S1);
+	}
 
-        return sample[0] != 0;
-    }
-	
-	public void avancerJusquePalet() {
-			mLeft.forward();
-			mRight.forward();
-			while (this.isPressed()==false) {
-				Delay.msDelay(100);
-			}
-			mLeft.stop();
-			mRight.stop();
-			pinces.backward();
-			Delay.msDelay(250);
-			pinces.stop();
+	public boolean isPressed(){
+		float[] sample = new float[1];
+		fetchSample(sample, 0);
+		return sample[0] != 0;
 	}
 	
-	public static void main (String[]args) {
-	
-		CaptTactile capt= new CaptTactile(SensorPort.S1);	
-		capt.avancerJusquePalet();
-		
+	public void OuvertureDesPinces(){
+		pinces.forward();
+		Delay.msDelay(2000);
+		pinces.stop();
+	}
+
+	public void FermetureDesPinces(){
+		pinces.backward();
+		Delay.msDelay(2000);
+		pinces.stop();
+
+	}
+
+	public void avancerJusquePalet(Avancer aa) {
+		OuvertureDesPinces();
+		aa.setspeed(500);
+		aa.avancer();
+		while (this.isPressed()==false) {
+			Delay.msDelay(100);
 		}
+		aa.stop();
+		FermetureDesPinces();
 	}
-	
-
+	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt) throws IOException {
+		//Test t =new Test();
+		
+		t.AvancerTantQue(0.36);
+		avancerJusquePalet(t.roues);
+		t.roues.rotateAsynch(-185);
+		t.AvancerTantQue(0.09);
+		t.roues.rotateAsynch(187);
+		//trouverOuest();
+		tc.posePaletCamp(prop,t,capt);
+	}
+}
