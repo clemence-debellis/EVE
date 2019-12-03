@@ -2,9 +2,7 @@
 # Edit at https://www.gitignore.io/?templates=windows,eclipse
 
 ### Eclipse ###
-/.metadata/.*
-/.metadata/.log
-/.metadata/version.ini
+.metadata/
 bin/
 tmp/
 *.index
