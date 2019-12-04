@@ -17,7 +17,6 @@ public class LAvue extends EV3UltrasonicSensor{
 			//System.out.println(vue.getDistance());
 		}
 	
-	
 	public LAvue(Port port){
 		super(port);
 	}
@@ -26,6 +25,6 @@ public class LAvue extends EV3UltrasonicSensor{
 		SampleProvider distance= this.getMode("Distance");
 		float[] sample = new float[distance.sampleSize()];
 		distance.fetchSample(sample, 0);
-		 return sample[0];
+		return sample[0];
 	}
 }

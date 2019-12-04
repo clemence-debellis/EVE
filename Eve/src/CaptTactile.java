@@ -17,7 +17,7 @@ import lejos.robotics.TouchAdapter;
 public class CaptTactile extends EV3TouchSensor{
 
 	 RegulatedMotor pinces= new EV3MediumRegulatedMotor(MotorPort.D);
-	 public int SPEED =800;
+	 public int SPEED =500;
 
 	public CaptTactile(){
 		super(SensorPort.S1);
@@ -52,15 +52,16 @@ public class CaptTactile extends EV3TouchSensor{
 		aa.stop();
 		FermetureDesPinces();
 	}
-	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt) throws IOException {
+	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt, LAvue yeux) throws IOException {
 		//Test t =new Test();
 		
-		t.AvancerTantQue(0.36);
+		t.AvancerTantQue(0.35, yeux);
 		avancerJusquePalet(t.roues);
+		//il faut le faire tourner de l'autre coté puis le faire avancer un peu puis le recadrer avec la boussole poour aller au camp !
 		t.roues.rotateAsynch(-185);
-		t.AvancerTantQue(0.09);
+		t.AvancerTantQue(0.1, yeux);
 		t.roues.rotateAsynch(187);
 		//trouverOuest();
-		tc.posePaletCamp(prop,t,capt);
+		tc.posePaletCamp(prop,t,capt,yeux);
 	}
 }
