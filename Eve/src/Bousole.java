@@ -71,18 +71,16 @@ public class Bousole {
 	public void seRecaler() { /* on veut que quand il passe la ligne blanche face au mur, il tourne doucement 
 							dans le sens des aiguilles d'une montre et dès que la distance augmente, ça veut dire 
 							qu'il sera plus perpendiculaire au mur, on pourra remettre le paramètre 'orientation'
-							 à la valeur 'sud' s'il regarde à l'ouest ou au 'nors' s'il regarde à l'est*/
+							 à la valeur 'sud' s'il regarde à l'ouest ou au 'nord' s'il regarde à l'est*/
 		if (((colorSensor.getColor(couleur, colorSensor.getEchant()).equals("White")) && ((orientation>= nord)&&(orientation>=sud))){
-			while( /* distance n'augmente pas*/) {
 				trouverSud();
-			}
+		this.orientation = 270;
 		}
-		this.orientation = sud;
 		else if (((colorSensor.getColor(couleur, colorSensor.getEchant()).equals("White")) && ((orientation<= nord)||((orientation<=360)&&(orientation>=270))))){
-			while( /* distance n'augmente pas*/) {
 				trouverNord();
-			}
+		this.orientation = 90;
+	
 		}
-		this.orientation = nord;
-	}
 }
+
+	
