@@ -10,10 +10,6 @@ import lejos.utility.Delay;
 
 public class LAvue extends EV3UltrasonicSensor{
 	public static void main(String[] args) {
-			
-			//info pour moi pour afficher en continue 
-			//Delay.msDelay(500);
-			//System.out.println(vue.getDistance());
 		}
 	
 	public LAvue(Port port){

@@ -8,8 +8,6 @@ public class Test {
 	LAvue vue;
 	
 	public static void main(String[] args) {
-		Test w = new Test();
-		w.DetectionDunObjet();
 	}
 	//constructeur
 	public Test() {
@@ -48,7 +46,7 @@ public class Test {
 		Delay.msDelay(1000);
 		roues.setspeed(50);
 		roues.avancer();
-		Delay.msDelay(2000);
+		Delay.msDelay(2500);
 		roues.stop();
 		float gg = vue.getDistance();
 		System.out.println(gg);
@@ -65,21 +63,24 @@ public class Test {
 	
 	
 
-	public void DetectionDunObjet() {
-		
-		CaptTactile capt = new CaptTactile();
-		roues.setspeed(50);
+	public void DetectionDunObjet(CaptTactile capt) {
+		roues.setspeed(100);
 		int i = 0;
 		boolean b;
 
 		while( Button.ENTER.isUp()){
+			System.out.print("je suis dans la première boucle");
+			Delay.msDelay(1000);
+			Delay.msDelay(1000);
 			roues.setspeed(40);
 			roues.rotateAsynch(1000);
 			
 			while(i==0) {
-			if(vue.getDistance() < 0.5){
+			if(vue.getDistance() < 1){
 				roues.stop();
-				this.AvancerTantQue(0.40);
+				roues.rotateAsynch(-50);
+				Delay.msDelay(1000);
+				this.AvancerTantQue(0.34);
 				i++;
 			}
 			}
@@ -87,7 +88,6 @@ public class Test {
 			b = this.PALET();
 			if(b) {
 				capt.avancerJusquePalet(roues);
-				i++;
 			}
 			
 			else {

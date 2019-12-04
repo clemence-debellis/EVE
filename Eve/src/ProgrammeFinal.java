@@ -4,8 +4,7 @@ public class ProgrammeFinal {
 		
 		Test w = new Test();
 		CaptTactile capt = new CaptTactile();
-		capt.OuvertureDesPinces();
-		capt.FermetureDesPinces();
+		w.DetectionDunObjet(capt);
 
 	}
 }
