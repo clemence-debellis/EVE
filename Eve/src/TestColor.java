@@ -180,7 +180,6 @@ public static boolean goMessage() {
 		white[0]=Float.parseFloat(tabWhite[0]);
 		white[1]=Float.parseFloat(tabWhite[1]);
 		white[2]=Float.parseFloat(tabWhite[2]);
-
 		
 		double scalaire = TestColor.scalaire(sample, blue);
 		if (scalaire < minscal) {
@@ -230,21 +229,36 @@ public static boolean goMessage() {
 	}
 	//Adapter avec avancer
 	
-	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt) throws IOException{
+	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt, LAvue yeux) throws IOException{
 		
 		float[] tab= TestColor.getEchant();	
 		String couleur = TestColor.getColor(prop,tab);
-		//Avancer couple = new Avancer(MotorPort.B, MotorPort.C);
+	//	LAvue yeux = new LAvue(portYeux);
 		couple.roues.avancer();
 		while(couleur.equals("white")==false && Button.ENTER.isUp()) {
 			System.out.println(couleur);
 			Delay.msDelay(50);
+			
+			if(yeux.getDistance()<=0.2) {
+				float vue1= yeux.getDistance();
+				couple.roues.stop();
+				Delay.msDelay(3000);
+				float vue2 =yeux.getDistance();
+				if (vue1-vue2<=0.02)
+					//il faut trouver l'est ou l'ouest avec la boussole au lieu de le faire tourner comme ca
+					couple.roues.rotateAsynch(-90);
+					Delay.msDelay(1000);
+				couple.roues.avancer();
+			}
+			
 			tab= TestColor.getEchant();	
 			couleur = TestColor.getColor(prop,tab);
 
 		}
+
 			couple.roues.stop();
 			capt.OuvertureDesPinces();
+			couple.roues.setspeed(200);
 			couple.roues.reculer();
 			Delay.msDelay(1000);
 			couple.roues.stop();

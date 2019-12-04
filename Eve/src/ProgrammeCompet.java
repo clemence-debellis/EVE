@@ -7,7 +7,10 @@ import java.util.Properties;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
+import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 public class ProgrammeCompet {
 
@@ -21,12 +24,16 @@ public class ProgrammeCompet {
 		private EV3ColorSensor colorSensor = new EV3ColorSensor(port);*/
 		
 		CaptTactile captTact=new CaptTactile();
-
-		EV3ColorSensor lePort = new EV3ColorSensor(LocalEV3.get().getPort("S4"));
-		TestColor captCouleur = new TestColor(LocalEV3.get().getPort("S4"), lePort);
-		Test t = new Test();
+		//Port port = new Port(LocalEV3.get().getPort("S4"));
+		//EV3ColorSensor lePort = new ;
+		TestColor captCouleur = new TestColor(SensorPort.S4, new EV3ColorSensor(SensorPort.S4));
+		Test t=new Test();
+		//	EV3UltrasonicSensor portYeux = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
+		LAvue yeux=new LAvue(SensorPort.S3);
 		//Avancer coupleRoues =new Avancer(MotorPort.B, MotorPort.C);
-		captTact.recupPremierPalet(colore ,t,captCouleur, captTact);
+		captTact.recupPremierPalet(colore, t, captCouleur, captTact, yeux);
+		//captCouleur.posePaletCamp(colore, t, captTact, yeux);
+		//captTact.avancerJusquePalet(t.roues);
 		
 		
 		

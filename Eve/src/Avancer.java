@@ -9,7 +9,7 @@ public class Avancer
 {
     private EV3LargeRegulatedMotor mLeftMotor;
     private EV3LargeRegulatedMotor mRightMotor;
-    public int SPEED =800;
+    public int SPEED =500;
 
     public Avancer(Port left_port, Port right_port)
     {
