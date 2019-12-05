@@ -15,29 +15,41 @@ public class LeJOS {
 		//g.drawString("Hello world", 0,0, GraphicsLCD.VCENTER | GraphicsLCD.LEFT);
 	//	Delay.msDelay(5000);
 		
-		RegulatedMotor m = new EV3LargeRegulatedMotor (MotorPort.D);
-		RegulatedMotor m1 = new EV3LargeRegulatedMotor (MotorPort.A);
-		m.rotate(400);
-		//m1.rotate(-400);
+		RegulatedMotor m = new EV3LargeRegulatedMotor (MotorPort.B);
+		RegulatedMotor m1 = new EV3LargeRegulatedMotor (MotorPort.C);
 		
-		//EncoderMotor em1 = new UnregulatedMotor (MotorPort.A);
-		//EncoderMotor em = new UnregulatedMotor (MotorPort.D);
+		m.forward();
+		m1.forward();
+		Delay.msDelay(1000);
+		m1.stop();
+		m.stop();
 		m.setSpeed(200);
-		m1.setSpeed(200);
-		m1.forward();
-		m.forward();
+		m.rotate(1600);
+		//m.forward();
+		//m1.forward();
 		Delay.msDelay(2000);
-		m1.stop();
-		m.stop();
-		m.rotate(400);
-		//m.setPower(60);
-		//m1.setPower(60);
-		m1.forward();
-		m.forward();
-		Delay.msDelay(2000);
-		m1.stop();
-		m.stop();
-		m.rotate(400);
+		//m.backward();
+		//m1.backward();
+		//Delay.msDelay(2000);
+		
+		//EncoderMotor em1 = new UnregulatedMotor (MotorPort.B);
+		//EncoderMotor em = new UnregulatedMotor (MotorPort.C);
+		//em.setSpeed(200);
+		//em1.setSpeed(200);
+		//em1.forward();
+		//em.forward();
+		//Delay.msDelay(2000);
+		//em1.stop();
+		//em.stop();
+		//em.rotate(400);
+		//em.setPower(60);
+		//em1.setPower(60);
+		//em1.forward();
+		//em.forward();
+		//Delay.msDelay(2000);
+		//em1.stop();
+		//em.stop();
+		//em.rotate(400);
 
 	}
 

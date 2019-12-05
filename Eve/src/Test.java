@@ -15,10 +15,9 @@ public class Test {
 			//Delay.msDelay(500);
 			//System.out.println(vue.getDistance());
 			
-			w.Detection();
+			//w.Detection();
 	//		   }
-		
-		
+			
 }
 	//constructeur
 	public Test() {
