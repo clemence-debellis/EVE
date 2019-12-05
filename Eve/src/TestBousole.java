@@ -1,6 +1,7 @@
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
+import lejos.utility.Delay;
 import lejos.hardware.BrickFinder;
 
 public class TestBousole {
@@ -14,8 +15,11 @@ public class TestBousole {
 		//B.orienter(90);
 		//System.out.println(B.orientation);
 		
-		B.trouverSud();
-		System.out.println(B.orientation);
+		B.trouverEst();
+		System.out.println(B.getAngle());
+		Delay.msDelay(2000);
+		//roues.setspeed(350);
+		//roues.rotateAsynch(800,3000);
 		
 	}
 }

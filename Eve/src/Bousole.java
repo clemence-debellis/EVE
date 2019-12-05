@@ -12,7 +12,7 @@ public class Bousole {
 	int nord=90;	//tourner de 180 pour robot = 400 
 	int est=180;	//tourner de 270 pour robot = 600 
 	int sud=270;	//tourner de 360 pour robot = 800 
-	int SPEED=400;
+	int SPEED=350;
 	
 	Avancer roues = new Avancer(MotorPort.B, MotorPort.C);
 	private static Port port=LocalEV3.get().getPort("S4");
@@ -28,8 +28,12 @@ public class Bousole {
 		orientation=0;
 	}
 	
+	public int getAngle () {
+		return orientation;
+	}
+	
 	public void orienter (int angle) { // additionne les 2 angles 
-		if(angle<0) {
+		if(angle<0) {					// par exemple, s'il est à 90 et qu'on veut le faire tourner de 90, l'orientation va se mettre à 180
 			orientation=((360+orientation)+angle)%360;
 		}
 		else{
@@ -39,7 +43,7 @@ public class Bousole {
 	
 	public int nouvelAngle (int angle) { // met la valeur de l'ancien angle à la valeur du nouvel angle
 		int orien2=orientation;			//retourne la différence entre l'angle de base et le nouvel angle 
-		orientation=angle;
+		orientation=angle;				// par exemple, s'il était à 0 et qu'il passe à 90, il met orientation à 90 et retourne 90
 		int res = orien2-angle;
 		return -res;
 	}
@@ -47,40 +51,27 @@ public class Bousole {
 	public void trouverNord () {
 		int res = nouvelAngle(nord);
 		roues.setspeed(SPEED);
-		roues.rotateAsynch(-res*200/90);
+		roues.rotateAsynch(-res*200/90,2000);
 		}
 	
 	public void trouverSud () {
 		int res = nouvelAngle(sud);
 		roues.setspeed(SPEED);
-		roues.rotateAsynch(-res*200/90);
+		roues.rotateAsynch(-res*200/90,2000);
 	}
 	
 	public void trouverEst () {
 		int res = nouvelAngle(est);
 		roues.setspeed(SPEED);
-		roues.rotateAsynch(-res*200/90);
+		roues.rotateAsynch(-res*200/90,2000);
 	}
 	
 	public void trouverOuest () {
 		int res = nouvelAngle(ouest);
 		roues.setspeed(SPEED);
-		roues.rotateAsynch(-res*200/90);
+		roues.rotateAsynch(-res*200/90,2000);
 	}
 	
-	public void seRecaler() { /* on veut que quand il passe la ligne blanche face au mur, il tourne doucement 
-							dans le sens des aiguilles d'une montre et dès que la distance augmente, ça veut dire 
-							qu'il sera plus perpendiculaire au mur, on pourra remettre le paramètre 'orientation'
-							 à la valeur 'sud' s'il regarde à l'ouest ou au 'nord' s'il regarde à l'est*/
-		if (((colorSensor.getColor(couleur, colorSensor.getEchant()).equals("White")) && ((orientation>= nord)&&(orientation>=sud))){
-				trouverSud();
-		this.orientation = 270;
-		}
-		else if (((colorSensor.getColor(couleur, colorSensor.getEchant()).equals("White")) && ((orientation<= nord)||((orientation<=360)&&(orientation>=270))))){
-				trouverNord();
-		this.orientation = 90;
-	
-		}
 }
 
 	
