@@ -16,7 +16,7 @@ public class Test {
 	}
 	
 	
-	public void AvancerTantQue(double f){
+	public void AvancerTantQue(double f, LAvue vue){
 
 		roues.setspeed(300);
 		while (vue.getDistance()>= f && Button.ENTER.isUp()){
@@ -24,6 +24,7 @@ public class Test {
 		}
 		roues.stop();
 	}
+
 	
 	public void ReculerTantQue(double f){
 
@@ -44,9 +45,9 @@ public class Test {
 		float dd = vue.getDistance();
 		System.out.println(dd);
 		Delay.msDelay(1000);
-		roues.setspeed(50);
+		roues.setspeed(200);
 		roues.avancer();
-		Delay.msDelay(2500);
+		Delay.msDelay(1500);
 		roues.stop();
 		float gg = vue.getDistance();
 		System.out.println(gg);
@@ -63,39 +64,77 @@ public class Test {
 	
 	
 
-	public void DetectionDunObjet(CaptTactile capt) {
+	public boolean DetectionDunObjetG(CaptTactile capt) {
 		roues.setspeed(100);
-		int i = 0;
+		int j = 0;
 		boolean b;
 
 		while( Button.ENTER.isUp()){
-			System.out.print("je suis dans la première boucle");
 			Delay.msDelay(1000);
 			Delay.msDelay(1000);
 			roues.setspeed(40);
-			roues.rotateAsynch(1000);
+			roues.rotateAsynchG(1000,2000);
 			
-			while(i==0) {
+			while(j==0) {
 			if(vue.getDistance() < 1){
 				roues.stop();
-				roues.rotateAsynch(-50);
+				roues.rotateAsynchG(-50,500);
 				Delay.msDelay(1000);
-				this.AvancerTantQue(0.34);
-				i++;
+				this.AvancerTantQue(0.34,vue);
+				j++;
 			}
 			}
-			i=0;
+			j=0;
 			b = this.PALET();
 			if(b) {
 				capt.avancerJusquePalet(roues);
+				j=5;
 			}
 			
 			else {
 				roues.reculerTemps(2000);
 				Delay.msDelay(2000);
 				roues.stop();
+				j=10;
 			}
 		}
+		return (j==5);
+	}
+	public boolean DetectionDunObjetD(CaptTactile capt) {
+		roues.setspeed(100);
+		int j = 0;
+		boolean b;
+
+		while( Button.ENTER.isUp()){
+			Delay.msDelay(1000);
+			Delay.msDelay(1000);
+			roues.setspeed(40);
+			roues.rotateAsynchD(1000,2000);
+			
+			while(j==0) {
+			if(vue.getDistance() < 1){
+				roues.stop();
+				roues.rotateAsynchD(-50,500);
+				Delay.msDelay(1000);
+				this.AvancerTantQue(0.34,vue);
+				j++;
+			}
+			}
+			j=0;
+			b = this.PALET();
+			if(b) {
+				capt.avancerJusquePalet(roues);
+				j=5;
+			}
+			
+			else {
+				roues.reculerTemps(2000);
+				Delay.msDelay(2000);
+				roues.stop();
+				j=10;
+			}
+		}
+		return (j==5);
 	}
 
 }

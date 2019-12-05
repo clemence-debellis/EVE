@@ -64,31 +64,14 @@ public class Avancer
         mLeftMotor.endSynchronization();
     }
     
-    public void rotateAsynch(int angle) {
+    public void rotateAsynchG(int angle,int temps) {
 
     	mLeftMotor.startSynchronization();
         mLeftMotor.rotate(angle, true);
         mRightMotor.rotate(-angle, true);
         mLeftMotor.endSynchronization();
         
-        Delay.msDelay(1510);
-        
-        mLeftMotor.startSynchronization();
-        mLeftMotor.stop();
-        mRightMotor.stop();
-        mLeftMotor.endSynchronization();
-        
-    	
-    }
-    public void rotateG() {
-    	
-        
-    	mLeftMotor.startSynchronization();
-        mLeftMotor.forward();
-        mRightMotor.backward();
-        mLeftMotor.endSynchronization();
-        
-        Delay.msDelay(1510);
+        Delay.msDelay(temps);
         
         mLeftMotor.startSynchronization();
         mLeftMotor.stop();
@@ -98,6 +81,22 @@ public class Avancer
     	
     }
     
+    public void rotateAsynchD(int angle,int temps) {
+
+    	mLeftMotor.startSynchronization();
+        mLeftMotor.rotate(-angle, true);
+        mRightMotor.rotate(angle, true);
+        mLeftMotor.endSynchronization();
+        
+        Delay.msDelay(temps);
+        
+        mLeftMotor.startSynchronization();
+        mLeftMotor.stop();
+        mRightMotor.stop();
+        mLeftMotor.endSynchronization();
+        
+    	
+    }
     public void rotation() {
     	
     	mLeftMotor.startSynchronization();
