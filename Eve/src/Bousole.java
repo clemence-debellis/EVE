@@ -42,8 +42,8 @@ public class Bousole {
 	}
 	
 	public int nouvelAngle (int angle) { // met la valeur de l'ancien angle à la valeur du nouvel angle
-		int orien2=orientation;			//retourne la différence entre l'angle de base et le nouvel angle 
-		orientation=angle;				// par exemple, s'il était à 0 et qu'il passe à 90, il met orientation à 90 et retourne 90
+		int orien2=orientation;			// et retourne la valeur de l'écart entre l'angle de base et le nouvel angle
+		orientation=angle;
 		int res = orien2-angle;
 		return -res;
 	}

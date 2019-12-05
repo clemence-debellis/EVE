@@ -20,6 +20,5 @@ public class TestBousole {
 		Delay.msDelay(2000);
 		//roues.setspeed(350);
 		//roues.rotateAsynch(800,3000);
-		
 	}
 }
