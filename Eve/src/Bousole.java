@@ -15,9 +15,7 @@ public class Bousole {
 	int SPEED=350;
 	
 	Avancer roues = new Avancer(MotorPort.B, MotorPort.C);
-	private static Port port=LocalEV3.get().getPort("S4");
 	private static Port port2=LocalEV3.get().getPort("S3");
-	EV3ColorSensor colorSensor = new EV3ColorSensor(port);
 	EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(port2);
 	
 	public Bousole (int orientation) {
@@ -72,6 +70,9 @@ public class Bousole {
 		roues.rotateAsynch(-res*200/90,2000);
 	}
 	
+	// vitesse = distance / temps
+	// distance = vitesse * temps 
+
 }
 
 	

@@ -18,6 +18,16 @@ public class TestBousole {
 		B.trouverEst();
 		System.out.println(B.getAngle());
 		Delay.msDelay(2000);
+		B.trouverNord();
+		System.out.println(B.getAngle());
+		Delay.msDelay(2000);
+		B.trouverSud();
+		System.out.println(B.getAngle());
+		Delay.msDelay(2000);
+		B.trouverOuest();
+		System.out.println(B.getAngle());
+		Delay.msDelay(2000);
+		
 		//roues.setspeed(350);
 		//roues.rotateAsynch(800,3000);
 	}
