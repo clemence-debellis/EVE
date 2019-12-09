@@ -229,7 +229,7 @@ public class TestColor {
 	}
 	//Adapter avec avancer
 
-	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt, LAvue yeux) throws IOException{
+	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt, LAvue yeux, char cotes,Boussole boussole) throws IOException{
 
 		float[] tab= TestColor.getEchant();	
 		String couleur = TestColor.getColor(prop,tab);
@@ -263,6 +263,14 @@ public class TestColor {
 		Delay.msDelay(1000);
 		couple.roues.stop();
 		capt.FermetureDesPinces();
+		
+		if (cotes=='d') {
+			boussole.trouverEst(couple.roues);
+		}
+		
+		else {
+			boussole.trouverOuest(couple.roues);
+		}
 	}
 
 }

@@ -19,7 +19,7 @@ public class Test {
 	public void AvancerTantQue(double f, LAvue vue){
 
 		roues.setspeed(300);
-		while (vue.getDistance()>= f && Button.ENTER.isUp()){
+		while (vue.getDistance()>= f && vue.getDistance()<=0.2){
 			roues.avancer();
 		}
 		roues.stop();
@@ -64,14 +64,11 @@ public class Test {
 	
 	
 
-	public boolean DetectionDunObjetG(CaptTactile capt) {
+	public boolean DetectionDunObjetG(CaptTactile capt,char cotes) {
 		roues.setspeed(100);
 		int j = 0;
 		boolean b;
 
-		while( Button.ENTER.isUp()){
-			Delay.msDelay(1000);
-			Delay.msDelay(1000);
 			roues.setspeed(40);
 			roues.rotateAsynchG(1000,2000);
 			
@@ -87,7 +84,7 @@ public class Test {
 			j=0;
 			b = this.PALET();
 			if(b) {
-				capt.avancerJusquePalet(roues);
+				capt.avancerJusquePalet(roues,cotes);
 				j=5;
 			}
 			
@@ -97,17 +94,14 @@ public class Test {
 				roues.stop();
 				j=10;
 			}
-		}
 		return (j==5);
 	}
-	public boolean DetectionDunObjetD(CaptTactile capt) {
+	
+	public boolean DetectionDunObjetD(CaptTactile capt,char cotes) {
 		roues.setspeed(100);
 		int j = 0;
 		boolean b;
 
-		while( Button.ENTER.isUp()){
-			Delay.msDelay(1000);
-			Delay.msDelay(1000);
 			roues.setspeed(40);
 			roues.rotateAsynchD(1000,2000);
 			
@@ -123,18 +117,15 @@ public class Test {
 			j=0;
 			b = this.PALET();
 			if(b) {
-				capt.avancerJusquePalet(roues);
-				j=5;
+				return capt.avancerJusquePalet(roues,cotes);
 			}
 			
 			else {
 				roues.reculerTemps(2000);
 				Delay.msDelay(2000);
 				roues.stop();
-				j=10;
+				return false;
 			}
-		}
-		return (j==5);
 	}
 
 }

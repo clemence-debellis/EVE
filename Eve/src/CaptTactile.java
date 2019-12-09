@@ -43,28 +43,40 @@ public class CaptTactile extends EV3TouchSensor{
 
 	}
 
-	public void avancerJusquePalet(Avancer aa) {
+	public boolean avancerJusquePalet(Avancer aa,char cotes) {
+		
 		this.OuvertureDesPinces();
 		aa.setspeed(500);
 		aa.avancer();
-		while (this.isPressed()==false) {
+		int i=0;
+		while (this.isPressed()==false && i<300) {
 			Delay.msDelay(100);
+			i++;
 		}
 		aa.stop();
 		this.FermetureDesPinces();
+		if (i>400) {
+			return false;
+		}
+		return true;
 	}
 
-	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt, LAvue yeux) throws IOException {
+	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt, LAvue yeux,char cotes,Boussole boussole) throws IOException {
 		//Test t =new Test();
 
 		t.AvancerTantQue(0.35, yeux);
-		avancerJusquePalet(t.roues);
-		//il faut le faire tourner de l'autre coté puis le faire avancer un peu puis le recadrer avec la boussole poour aller au camp !
-		t.roues.rotateAsynchG(-185,1500);
-		t.AvancerTantQue(0.1, yeux);
-		t.roues.rotateAsynchG(187,1500);
-		//trouverOuest();
-		tc.posePaletCamp(prop,t,capt,yeux);
+		avancerJusquePalet(t.roues,cotes);
+
+		if(cotes=='d') {
+			boussole.trouverSud(t.roues);
+			t.AvancerTantQue(0.1, yeux);
+			boussole.trouverEst(t.roues);
+		}
+		else {
+			boussole.trouverSud(t.roues);
+			t.AvancerTantQue(0.1, yeux);
+			boussole.trouverOuest(t.roues);
+		}
 	}
 }
 

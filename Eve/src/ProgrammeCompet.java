@@ -33,6 +33,7 @@ public class ProgrammeCompet {
 		private EV3ColorSensor colorSensor = new EV3ColorSensor(port);*/
 
 		CaptTactile captTact=new CaptTactile();
+		Boussole boussole = new Boussole();
 		//Port port = new Port(LocalEV3.get().getPort("S4"));
 		//EV3ColorSensor lePort = new ;
 		TestColor captCouleur = new TestColor(SensorPort.S4, new EV3ColorSensor(SensorPort.S4));
@@ -45,50 +46,128 @@ public class ProgrammeCompet {
 		int CompteurDeMur = 0;
 
 		if(leMatchCommence==0) {
-			captTact.recupPremierPalet(colore, vehicule, captCouleur, captTact, vehicule.vue);
-			captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue);
+			captTact.recupPremierPalet(colore, vehicule, captCouleur, captTact, vehicule.vue,cotes,boussole);
+			captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
 			//captTact.avancerJusquePalet(vehicule.roues);je sais pas pk y avait ca ici
 			//ici la boussole permet au vehicule de  se remettre dans le bon sens (soit derrière lui)
 			leMatchCommence++;
 			CompteurDePalet++;
 		}
 		boolean b;
+		while(Button.ENTER.isUp()){
 
-		while(Button.ENTER.isUp()&& CompteurDePalet<9) {
-			
-			if(cotes == 'd') {
-				while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
-					b= vehicule.DetectionDunObjetD(captTact);
-					if(b){
-						CompteurDePalet++;
+			while(CompteurDePalet<4) {
+
+				if(cotes == 'd') {
+					CompteurDeMur =0;
+					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+						b=vehicule.DetectionDunObjetD(captTact,cotes);
+						if(b){
+							CompteurDePalet++;
+						}
+						else {
+							CompteurDeMur++;
+						}
 					}
-					else {
-						CompteurDeMur++;
+					if (CompteurDeMur==3) {
+						CompteurDeMur =0;
+						while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+							b=vehicule.DetectionDunObjetG(captTact,cotes);
+							if(b){
+								CompteurDePalet++;
+							}
+							else {
+								CompteurDeMur++;
+							}
+						}
 					}
 				}
-				if (CompteurDeMur==3) {
-					cotes='g';
+
+
+				else{
+					CompteurDeMur=0;
+					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+						b= vehicule.DetectionDunObjetG(captTact,cotes);
+						if(b){
+							CompteurDePalet++;
+						}
+						else {
+							CompteurDeMur++;
+						}
+					}
+					if (CompteurDeMur==3) {
+						CompteurDeMur=0;
+						while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+							b= vehicule.DetectionDunObjetG(captTact,cotes);
+							if(b){
+								CompteurDePalet++;
+							}
+							else {
+								CompteurDeMur++;
+							}
+						}
+					}
 				}
+
+			}
+			CompteurDePalet=0;
+			while(CompteurDePalet<4) {
+
+				if(cotes == 'd') {
+					CompteurDeMur =0;
+					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+						b=vehicule.DetectionDunObjetG(captTact,cotes);
+						if(b){
+							CompteurDePalet++;
+						}
+						else {
+							CompteurDeMur++;
+						}
+					}
+					if (CompteurDeMur==3) {
+						CompteurDeMur =0;
+						while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+							b=vehicule.DetectionDunObjetD(captTact,cotes);
+							if(b){
+								CompteurDePalet++;
+							}
+							else {
+								CompteurDeMur++;
+							}
+						}
+					}
+				}
+
+
+				else{
+					CompteurDeMur=0;
+					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+						b= vehicule.DetectionDunObjetD(captTact,cotes);
+						if(b){
+							CompteurDePalet++;
+						}
+						else {
+							CompteurDeMur++;
+						}
+					}
+					if (CompteurDeMur==3) {
+						CompteurDeMur=0;
+						while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
+							b= vehicule.DetectionDunObjetG(captTact,cotes);
+							if(b){
+								CompteurDePalet++;
+							}
+							else {
+								CompteurDeMur++;
+							}
+						}
+					}
+				}
+
 			}
 
-			
-			else{
-				while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
-
-					b= vehicule.DetectionDunObjetG(captTact);
-
-					if(b){
-						CompteurDePalet++;
-					}
-					else {
-						CompteurDeMur++;
-					}
-				}
-				if (CompteurDeMur==3) {
-					cotes='d';
-				}
-			}
 		}
+
 	}
 }
 
