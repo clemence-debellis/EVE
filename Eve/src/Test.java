@@ -4,14 +4,14 @@ import lejos.hardware.port.SensorPort;
 import lejos.utility.Delay;
 
 public class Test {
-	Avancer roues;
+	DuoDeRouesSynchro roues;
 	LAvue vue;
 	
 	public static void main(String[] args) {
 	}
 	//constructeur
 	public Test() {
-		roues = new Avancer();
+		roues = new DuoDeRouesSynchro();
 		vue = new LAvue(SensorPort.S3);
 	}
 	
@@ -19,7 +19,7 @@ public class Test {
 	public void AvancerTantQue(double f, LAvue vue){
 
 		roues.setspeed(300);
-		while (vue.getDistance()>= f && vue.getDistance()<=0.2){
+		while (vue.getDistance()>= f || vue.getDistance()<=0.2){
 			roues.avancer();
 		}
 		roues.stop();
@@ -103,12 +103,12 @@ public class Test {
 		boolean b;
 
 			roues.setspeed(40);
-			roues.rotateAsynchD(1000,2000);
+			roues.rotateAsynchG(1000,2000);
 			
 			while(j==0) {
 			if(vue.getDistance() < 1){
 				roues.stop();
-				roues.rotateAsynchD(-50,500);
+				roues.rotateAsynchG(-50,500);
 				Delay.msDelay(1000);
 				this.AvancerTantQue(0.34,vue);
 				j++;

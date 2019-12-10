@@ -1,11 +1,3 @@
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
-import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.robotics.RegulatedMotor;
-import lejos.hardware.BrickFinder;
-import lejos.hardware.ev3.LocalEV3;
-
 public class Boussole {
 	int orientation;
 	int ouest=0;	//tourner de 90 pour robot = 200  
@@ -15,56 +7,92 @@ public class Boussole {
 	public Boussole (int orientation) {
 		this.orientation=orientation;
 	}
-	
+
+	/**
+	 * @author clémence
+	 * Constructeur de la classe Boussole
+	 */
 	public Boussole () {
 		orientation=0;
 	}
-	
+
+	/**
+	 * @author clémence
+	 * @return l'orientation dans lequel il se trouve
+	 * Permet de savoir l'angle dans lequel se trouve le robot
+	 */
 	public int getAngle () {
 		return orientation;
 	}
-	
-	public void orienter (int angle) { // additionne les 2 angles 
-		if(angle<0) {					// par exemple, s'il est à 90 et qu'on veut le faire tourner de 90, l'orientation va se mettre à 180
+
+	/**
+	 * @author clémence
+	 * @param angle angle de la nouvelle position
+	 * Entre la nouvelle position que doit avoir le robot et s'oriente vers lui
+	 */
+	public void orienter (int angle) { 
+		if(angle<0) {
 			orientation=((360+orientation)+angle)%360;
 		}
 		else{
 			orientation=(orientation+angle)%360;
 		}
 	}
-	
-	public int nouvelAngle (int angle) { // met la valeur de l'ancien angle à la valeur du nouvel angle
-		int orien2=orientation;			// et retourne la valeur de l'écart entre l'angle de base et le nouvel angle
+
+	/**
+	 * @author clémence
+	 * @param angle
+	 * @return retourne la différence entre l'ancien angle et le nouvel angle
+	 * Donne à orientation un nouvel angle
+	 */
+	public int nouvelAngle (int angle) { 
+		int orien2=orientation;
 		orientation=angle;
 		int res = orien2-angle;
 		return -res;
 	}
-	
-	public void trouverNord (Avancer t) {
+
+	/**
+	 * @author clémence
+	 * @param t représente les deux roues qui vont tourner
+	 * Oriente le robot vers le nord
+	 */
+	public void trouverNord (DuoDeRouesSynchro t) {
 		int res = nouvelAngle(nord);
 		t.setspeed(350);
-		t.rotateAsynchD(-res*200/90,2000);
-		}
-	
-	public void trouverSud (Avancer t) {
+		t.rotateAsynchG(-res*200/90,2000);
+	}
+
+	/**
+	 * @author clémence
+	 * @param t représente les deux roues qui vont tourner
+	 * Oriente le robot vers le sud
+	 */
+	public void trouverSud (DuoDeRouesSynchro t) {
 		int res = nouvelAngle(sud);
 		t.setspeed(350);
 		t.rotateAsynchG(-res*200/90,2000);
 	}
-	
-	public void trouverEst (Avancer t) {
+
+	/**
+	 * @author clémence
+	 * @param t représente les deux roues qui vont tourner
+	 * Oriente le robot vers l'est
+	 */
+	public void trouverEst (DuoDeRouesSynchro t) {
 		int res = nouvelAngle(est);
 		t.setspeed(350);
 		t.rotateAsynchG(-res*200/90,2000);
 	}
-	
-	public void trouverOuest (Avancer t) {
+
+	/**
+	 * @author clémence
+	 * @param t représente les deux roues qui vont tourner
+	 * Oriente le robot vers l'ouest
+	 */
+	public void trouverOuest (DuoDeRouesSynchro t) {
 		int res = nouvelAngle(ouest);
 		t.setspeed(350);
 		t.rotateAsynchG(-res*200/90,2000);
 	}
-	
-	// vitesse = distance / temps
-	// distance = vitesse * temps 
-
 }

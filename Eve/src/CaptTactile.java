@@ -1,28 +1,30 @@
 import java.io.IOException;
 import java.util.Properties;
-
-import lejos.hardware.Button;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.RegulatedMotor;
-import lejos.robotics.SampleProvider;
-import lejos.robotics.Touch;
 import lejos.utility.Delay;
-import lejos.robotics.TouchAdapter;
 
 public class CaptTactile extends EV3TouchSensor{
 
 	static RegulatedMotor pinces= new EV3MediumRegulatedMotor (MotorPort.D);
 	public int SPEED =500;
 
+	/**
+	 * @author margaux
+	 * Constructeur de la classe CaptTactile
+	 */
 	public CaptTactile(){
 		super(SensorPort.S1);
 	}
 
+	/**
+	 * @author margaux
+	 * @return true si  le capteur est presse, false sinon
+	 * Return si la capteur est presse ou non
+	 */
 	public boolean isPressed(){
 		float[] sample = new float[1];
 		fetchSample(sample, 0);
@@ -30,30 +32,43 @@ public class CaptTactile extends EV3TouchSensor{
 		return sample[0] != 0;
 	}
 
-	public static void OuvertureDesPinces(){
+	/**
+	 * @author mathieu
+	 * Ouvre les pinces
+	 */
+	public void OuvertureDesPinces(){
 		pinces.forward();
 		Delay.msDelay(2000);
 		pinces.stop();
 	}
 
-	public static void FermetureDesPinces(){
+	/**
+	 * @author mathieu
+	 * Ferme les pinces
+	 */
+	public void FermetureDesPinces(){
 		pinces.backward();
 		Delay.msDelay(2000);
 		pinces.stop();
-
 	}
 
-	public boolean avancerJusquePalet(Avancer aa,char cotes) {
+	/**
+	 * @author margaux
+	 * @param roues duo de toues synchronisé
+	 * @param cotes
+	 * @return
+	 */
+	public boolean avancerJusquePalet(DuoDeRouesSynchro roues,char cotes) {
 		
 		this.OuvertureDesPinces();
-		aa.setspeed(500);
-		aa.avancer();
+		roues.setspeed(500);
+		roues.avancer();
 		int i=0;
 		while (this.isPressed()==false && i<300) {
 			Delay.msDelay(100);
 			i++;
 		}
-		aa.stop();
+		roues.stop();
 		this.FermetureDesPinces();
 		if (i>400) {
 			return false;
@@ -68,14 +83,14 @@ public class CaptTactile extends EV3TouchSensor{
 		avancerJusquePalet(t.roues,cotes);
 
 		if(cotes=='d') {
-			boussole.trouverSud(t.roues);
-			t.AvancerTantQue(0.1, yeux);
-			boussole.trouverEst(t.roues);
+			boussole.trouverNord(t.roues);
+			t.AvancerTantQue(0.22, yeux);
+			boussole.trouverOuest(t.roues);
 		}
 		else {
 			boussole.trouverSud(t.roues);
-			t.AvancerTantQue(0.1, yeux);
-			boussole.trouverOuest(t.roues);
+			t.AvancerTantQue(0.22, yeux);
+			boussole.trouverEst(t.roues);
 		}
 	}
 }

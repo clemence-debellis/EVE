@@ -59,11 +59,14 @@ public class ProgrammeCompet {
 			while(CompteurDePalet<4) {
 
 				if(cotes == 'd') {
+					boussole.orientation=0;
 					CompteurDeMur =0;
 					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
 						b=vehicule.DetectionDunObjetD(captTact,cotes);
 						if(b){
 							CompteurDePalet++;
+							boussole.trouverOuest(vehicule.roues);
+							captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
 						}
 						else {
 							CompteurDeMur++;
@@ -75,6 +78,8 @@ public class ProgrammeCompet {
 							b=vehicule.DetectionDunObjetG(captTact,cotes);
 							if(b){
 								CompteurDePalet++;
+								boussole.trouverOuest(vehicule.roues);
+								captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
 							}
 							else {
 								CompteurDeMur++;
@@ -86,6 +91,7 @@ public class ProgrammeCompet {
 
 				else{
 					CompteurDeMur=0;
+					boussole.orientation=180;
 					while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
 						b= vehicule.DetectionDunObjetG(captTact,cotes);
 						if(b){
@@ -100,7 +106,10 @@ public class ProgrammeCompet {
 						while(CompteurDeMur<3 || vehicule.vue.getDistance()<=0.2 ) {
 							b= vehicule.DetectionDunObjetG(captTact,cotes);
 							if(b){
+								boussole.trouverEst(vehicule.roues);
+							captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
 								CompteurDePalet++;
+								
 							}
 							else {
 								CompteurDeMur++;
