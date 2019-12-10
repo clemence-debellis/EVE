@@ -1,16 +1,16 @@
 import lejos.hardware.Button;
-import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.utility.Delay;
 
-public class Test {
+public class Vehicule {
+	
 	DuoDeRouesSynchro roues;
 	LAvue vue;
-	
-	public static void main(String[] args) {
-	}
-	//constructeur
-	public Test() {
+
+	/**
+	 * 
+	 */
+	public Vehicule() {
 		roues = new DuoDeRouesSynchro();
 		vue = new LAvue(SensorPort.S3);
 	}

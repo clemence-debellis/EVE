@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Properties;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
@@ -55,11 +54,12 @@ public class CaptTactile extends EV3TouchSensor{
 	/**
 	 * @author margaux
 	 * @param roues duo de toues synchronisé
-	 * @param cotes
-	 * @return
+	 * @param cotes cotes duquel se trouve le robot
+	 * @return true si un un palet a ete recupere false sinon
+	 * Avance jusqu a un palet et return si il a bien eu un palet ou si il y en avait pas
 	 */
 	public boolean avancerJusquePalet(DuoDeRouesSynchro roues,char cotes) {
-		
+
 		this.OuvertureDesPinces();
 		roues.setspeed(500);
 		roues.avancer();
@@ -76,21 +76,28 @@ public class CaptTactile extends EV3TouchSensor{
 		return true;
 	}
 
-	public void recupPremierPalet(Properties prop, Test t, TestColor tc, CaptTactile capt, LAvue yeux,char cotes,Boussole boussole) throws IOException {
-		//Test t =new Test();
+	/**
+	 * @author margaux
+	 * @param vehicule duo de roues synchro
+	 * @param cotes cotes de départ du robot
+	 * @param boussole la boussole du robot
+	 * @throws IOException
+	 * Recupere le palet et le rammène dans le camp adverse (pour le premier)
+	 */
+	public void recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole) throws IOException {
 
-		t.AvancerTantQue(0.35, yeux);
-		avancerJusquePalet(t.roues,cotes);
+		vehicule.AvancerTantQue(0.35, vehicule.vue);
+		avancerJusquePalet(vehicule.roues,cotes);
 
 		if(cotes=='d') {
-			boussole.trouverNord(t.roues);
-			t.AvancerTantQue(0.22, yeux);
-			boussole.trouverOuest(t.roues);
+			boussole.trouverNord(vehicule.roues);
+			vehicule.AvancerTantQue(0.22, vehicule.vue);
+			boussole.trouverOuest(vehicule.roues);
 		}
 		else {
-			boussole.trouverSud(t.roues);
-			t.AvancerTantQue(0.22, yeux);
-			boussole.trouverEst(t.roues);
+			boussole.trouverSud(vehicule.roues);
+			vehicule.AvancerTantQue(0.22, vehicule.vue);
+			boussole.trouverEst(vehicule.roues);
 		}
 	}
 }

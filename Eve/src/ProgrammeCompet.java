@@ -1,55 +1,31 @@
-
-import java.awt.RenderingHints.Key;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import lejos.hardware.Sound;
-import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.hardware.sensor.EV3TouchSensor;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.utility.Delay;
-
 import lejos.hardware.Button;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.SensorPort;
-import lejos.utility.Delay;
 
 public class ProgrammeCompet {
-
 
 	static public void main(String[]args) throws IOException  {
 		InputStream input= new FileInputStream("Couleurs");
 		Properties colore = new Properties();
 		colore.load(input);
-
-		/*	private Port port =LocalEV3.get().getPort("S4");
-		private EV3ColorSensor colorSensor = new EV3ColorSensor(port);*/
-
 		CaptTactile captTact=new CaptTactile();
 		Boussole boussole = new Boussole();
-		//Port port = new Port(LocalEV3.get().getPort("S4"));
-		//EV3ColorSensor lePort = new ;
-		TestColor captCouleur = new TestColor(SensorPort.S4, new EV3ColorSensor(SensorPort.S4));
-		Test vehicule = new Test();
-		//	EV3UltrasonicSensor portYeux = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
+		TestColor captCouleur = new TestColor(new EV3ColorSensor(SensorPort.S4));
+		Vehicule vehicule = new Vehicule();
 		char cotes = 'd';
+
 		Button.ESCAPE.waitForPress();
 		int leMatchCommence = 0;
 		int CompteurDePalet = 0;
 		int CompteurDeMur = 0;
 
 		if(leMatchCommence==0) {
-			captTact.recupPremierPalet(colore, vehicule, captCouleur, captTact, vehicule.vue,cotes,boussole);
-			captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
-			//captTact.avancerJusquePalet(vehicule.roues);je sais pas pk y avait ca ici
-			//ici la boussole permet au vehicule de  se remettre dans le bon sens (soit derrière lui)
+			captTact.recupPremierPalet(vehicule,cotes,boussole);
+			captCouleur.posePaletCamp(colore, vehicule, captTact,cotes,boussole);
 			leMatchCommence++;
 			CompteurDePalet++;
 		}
@@ -66,7 +42,7 @@ public class ProgrammeCompet {
 						if(b){
 							CompteurDePalet++;
 							boussole.trouverOuest(vehicule.roues);
-							captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
+							captCouleur.posePaletCamp(colore, vehicule, captTact,cotes,boussole);
 						}
 						else {
 							CompteurDeMur++;
@@ -79,7 +55,7 @@ public class ProgrammeCompet {
 							if(b){
 								CompteurDePalet++;
 								boussole.trouverOuest(vehicule.roues);
-								captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
+								captCouleur.posePaletCamp(colore, vehicule, captTact,cotes,boussole);
 							}
 							else {
 								CompteurDeMur++;
@@ -107,9 +83,9 @@ public class ProgrammeCompet {
 							b= vehicule.DetectionDunObjetG(captTact,cotes);
 							if(b){
 								boussole.trouverEst(vehicule.roues);
-							captCouleur.posePaletCamp(colore, vehicule, captTact,vehicule.vue,cotes,boussole);
+								captCouleur.posePaletCamp(colore, vehicule, captTact,cotes,boussole);
 								CompteurDePalet++;
-								
+
 							}
 							else {
 								CompteurDeMur++;
@@ -179,5 +155,3 @@ public class ProgrammeCompet {
 
 	}
 }
-
-	

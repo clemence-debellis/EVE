@@ -4,7 +4,6 @@ import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.Font;
 import lejos.hardware.lcd.GraphicsLCD;
-import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
@@ -17,14 +16,23 @@ import java.io.*;
 public class TestColor {
 
 
-	private Port port;//=LocalEV3.get().getPort("S4");
-	private static EV3ColorSensor colorSensor;//= new EV3ColorSensor(port);
+	private static EV3ColorSensor colorSensor;
 
-	public TestColor(Port port, EV3ColorSensor capteurCouleur) {
-		this.port = port;
+	/**
+	 * @author margaux
+	 * @param port port ou est le capteur couleur
+	 * @param capteurCouleur la variable du capteur couleur
+	 * Constructeur de la classe TestColor
+	 */
+	public TestColor(EV3ColorSensor capteurCouleur) {
 		colorSensor=capteurCouleur;
 	}
 
+	/**
+	 * @author Damien Pellier
+	 * @return true si on appuie sur ok false sinon
+	 * Affiche que le robot va faire la colorimetrie
+	 */
 	public static boolean goMessage() {
 
 		GraphicsLCD g = LocalEV3.get().getGraphicsLCD();
@@ -67,14 +75,18 @@ public class TestColor {
 			return true;
 		}
 	}
+	
+	/**
+	 * @author margaux
+	 * @throws IOException
+	 * Initialise les vecteurs couleur de chaque couleurs de la table et les stocks dans un properties
+	 */
 	public static void colorimetrie() throws IOException {
 		OutputStream fichier= new FileOutputStream("Couleurs");
 		Properties couleur= new Properties();
-		boolean again = true;
 
 		if (!goMessage()) System.exit(0);
 
-		//colorSensor = new EV3ColorSensor(port);
 		SampleProvider average = new MeanFilter(colorSensor.getRGBMode(), 1);
 		colorSensor.setFloodlight(Color.WHITE);
 
@@ -124,6 +136,11 @@ public class TestColor {
 		couleur.store(fichier,"comment");
 	}
 
+	/**
+	 * @author margaux
+	 * @return un tableau contenant les couleur vu
+	 * Capte une couleur et met sa veleur en float dans un tableau
+	 */
 	public static float[] getEchant() {
 		SampleProvider average = new MeanFilter(colorSensor.getRGBMode(), 1);
 		float[]tableau=new float[average.sampleSize()];
@@ -131,6 +148,14 @@ public class TestColor {
 		return tableau;
 	}
 
+	/**
+	 * @author margaux
+	 * @param prop map contenant les couleurs de référence
+	 * @param sample tabealu contenant la couleur percu
+	 * @return Une strng de la couleur la plus proche de celle percu
+	 * @throws IOException
+	 * Prend les properties de chaques couleur, les mets dans des tableaux différents et les compares avec les couleurs de référence et renvoie la couleur la plus proche de celle vue
+	 */
 	public static String getColor(Properties prop, float[] sample) throws IOException {
 
 		//LocalEV3.get().getPort("S4");
@@ -222,33 +247,48 @@ public class TestColor {
 		}
 		return color;
 	}
+	
+	/**
+	 * @author Damien Pellier
+	 * @param v1 couleur percu
+	 * @param v2 couleur de reference
+	 * @return la valeur de la différence des vecteur
+	 */
 	public static double scalaire(float[] v1, float[] v2) {
 		return Math.sqrt (Math.pow(v1[0] - v2[0], 2.0) +
 				Math.pow(v1[1] - v2[1], 2.0) +
 				Math.pow(v1[2] - v2[2], 2.0));
 	}
-	//Adapter avec avancer
 
-	public void posePaletCamp(Properties prop,Test couple, CaptTactile capt, LAvue yeux, char cotes,Boussole boussole) throws IOException{
+	/**
+	 * @author margaux
+	 * @param prop,map contenant les couleurs de référence (clé=String couleur et valeur= valeurs RGB de la couleur)
+	 * @param vehicule duo de roues synghronisées
+	 * @param capt capteur tactile
+	 * @param cotes cote du jeu ou se trouve le robot au debut
+	 * @param boussole, la boussole du robot
+	 * @throws IOException
+	 * ammène le palet au camp adversaire, ouvre les pinces lorsqu'il perçoit la ligne blanche
+	 */
+	public void posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole) throws IOException{
 
 		float[] tab= TestColor.getEchant();	
 		String couleur = TestColor.getColor(prop,tab);
-		//	LAvue yeux = new LAvue(portYeux);
-		couple.roues.avancer();
+		vehicule.roues.avancer();
 		while(couleur.equals("white")==false && Button.ENTER.isUp()) {
 			System.out.println(couleur);
 			Delay.msDelay(50);
 
-			if(yeux.getDistance()<=0.2) {
-				float vue1= yeux.getDistance();
-				couple.roues.stop();
+			if(vehicule.vue.getDistance()<=0.2) {
+				float vue1= vehicule.vue.getDistance();
+				vehicule.roues.stop();
 				Delay.msDelay(3000);
-				float vue2 =yeux.getDistance();
+				float vue2 =vehicule.vue.getDistance();
 				if (vue1-vue2<=0.02)
 					//il faut trouver l'est ou l'ouest avec la boussole au lieu de le faire tourner comme ca
-					couple.roues.rotateAsynchG(-90,1000);
+					vehicule.roues.rotateAsynchG(-90,1000);
 				Delay.msDelay(1000);
-				couple.roues.avancer();
+				vehicule.roues.avancer();
 			}
 
 			tab= TestColor.getEchant();	
@@ -256,20 +296,20 @@ public class TestColor {
 
 		}
 
-		couple.roues.stop();
+		vehicule.roues.stop();
 		capt.OuvertureDesPinces();
-		couple.roues.setspeed(200);
-		couple.roues.reculer();
+		vehicule.roues.setspeed(200);
+		vehicule.roues.reculer();
 		Delay.msDelay(1000);
-		couple.roues.stop();
+		vehicule.roues.stop();
 		capt.FermetureDesPinces();
 		
 		if (cotes=='d') {
-			boussole.trouverEst(couple.roues);
+			boussole.trouverEst(vehicule.roues);
 		}
 		
 		else {
-			boussole.trouverOuest(couple.roues);
+			boussole.trouverOuest(vehicule.roues);
 		}
 	}
 
