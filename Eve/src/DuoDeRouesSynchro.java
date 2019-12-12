@@ -13,8 +13,7 @@ public class DuoDeRouesSynchro{
 	 * @author mathieu
 	 * Constructeur de la classe DuoDeRoues
 	 */
-	public DuoDeRouesSynchro()
-	{
+	public DuoDeRouesSynchro(){
 		mLeftMotor = new EV3LargeRegulatedMotor(MotorPort.B);
 		mRightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
 		mLeftMotor.synchronizeWith(new RegulatedMotor[]{mRightMotor});
@@ -26,7 +25,12 @@ public class DuoDeRouesSynchro{
 	/**
 	 * @author mathieu
 	 * @param vitesse Nouvelles vitesse des moteurs
-	 * Parametre une nouvelle vitesse pour les deux moteurs
+	 * Objectif: Parametre une nouvelle vitesse pour les deux moteurs
+	 * Utilisee par: trouverNord (DuoDeRouesSynchro roues), trouverEst (DuoDeRouesSynchro roues),trouverOuest(DuoDeRouesSynchro roues),trouverSud(DuoDeRouesSynchro roues)
+	 * 				avancerJusquePalet(DuoDeRouesSynchro roues,char cotes), posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
+	 * 				AvancerTantQue(double f, LAvue vue), PALET(),DetectionDunObjetG(CaptTactile capt,char cotes),
+	 * 				DetectionDunObjetD(CaptTactile capt,char cotes)
+	 * Utilise la methode predefinie setSpeed(int speed)
 	 */
 	public void setspeed(int vitesse) {
 		mLeftMotor.setSpeed(vitesse);
@@ -35,7 +39,9 @@ public class DuoDeRouesSynchro{
 
 	/**
 	 * @author mathieu
-	 * Fait avancer les moteurs sans fin
+	 * Objectif: Faire tourner les moteurs sans fin afin de faire avancer le robot sans condition d'arret
+	 * Utilisee par: avancerJusquePalet(DuoDeRouesSynchro roues,char cotes), posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
+	 * 				AvancerTantQue(double f, LAvue vue),AvancerTantQue(boolean b), PALET()
 	 */
 	public void avancer(){
 		mLeftMotor.startSynchronization();
@@ -46,7 +52,9 @@ public class DuoDeRouesSynchro{
 
 	/**
 	 * @author mathieu
-	 * Arrete les moteurs
+	 * Objectif: Arreter les moteurs des roues au meme moment
+	 * Utilisee par: avancerJusquePalet(DuoDeRouesSynchro roues,char cotes), posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
+	 * 				AvancerTantQue(double f, LAvue vue), PALET()
 	 */
 	public void stop(){
 		mLeftMotor.startSynchronization();
@@ -56,10 +64,10 @@ public class DuoDeRouesSynchro{
 	}
 	/**
 	 * @author mathieu
-	 * Fais reculer les véhicules sans fin
+	 * Objectif: Faire reculer les véhicules sans fin et de maniere synchronisee
+	 * Utilisee par: posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
 	 */
-	public void reculer()
-	{
+	public void reculer(){
 		mLeftMotor.startSynchronization();
 		mLeftMotor.backward();
 		mRightMotor.backward();
@@ -69,10 +77,10 @@ public class DuoDeRouesSynchro{
 	/**
 	 * @author mathieu
 	 * @param temps temps que prendra le recul
-	 * Recul durant un temps donne
+	 * Objectif: Reculer durant un temps donne
+	 * Utilisee par: DetectionDunObjetD(CaptTactile capt,char cotes),DetectionDunObjetG(CaptTactile capt,char cotes)
 	 */
-	public void reculerTemps(int temps)
-	{
+	public void reculerTemps(int temps){
 		mLeftMotor.startSynchronization();
 		mLeftMotor.backward();
 		mRightMotor.backward();
@@ -90,7 +98,9 @@ public class DuoDeRouesSynchro{
 	 * @author mathieu
 	 * @param angle angle duquel la rotation va être faite
 	 * @param temps temps de rotation
-	 * Tourne sur un angle donne pendant un temps donne vers la gauche, roues synchronisées
+	 * Objectif: Tourner selon un angle donne pendant un temps donne vers la gauche avec les roues synchronisées
+	 * Utilisee par: posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole),
+	 * 				DetectionDunObjetG(CaptTactile capt,char cotes)
 	 */
 	public void rotateAsynchG(int angle,int temps) {
 
@@ -111,7 +121,8 @@ public class DuoDeRouesSynchro{
 	 * @author mathieu
 	 * @param angle angle duquel la rotation va être faite
 	 * @param temps temps de rotation
-	 * Tourne sur un angle donne pendant un temps donne vers la droite, roues synchronisées
+	 * Objectif: Tourner selon un angle donne pendant un temps donne vers la droite avec les roues synchronisées
+	 * Utilisee par: DetectionDunObjetD(CaptTactile capt,char cotes)
 	 */
 	public void rotateAsynchD(int angle,int temps) {
 
@@ -126,7 +137,6 @@ public class DuoDeRouesSynchro{
 		mLeftMotor.stop();
 		mRightMotor.stop();
 		mLeftMotor.endSynchronization();
-
 
 	}
 }

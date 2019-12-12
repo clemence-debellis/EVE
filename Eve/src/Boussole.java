@@ -9,28 +9,19 @@ public class Boussole {
 	}
 
 	/**
-	 * @author clémence
+	 * @author clemence
 	 * Constructeur de la classe Boussole
 	 */
-	public Boussole () {
+	public Boussole (){
 		orientation=0;
 	}
 
 	/**
-	 * @author clémence
-	 * @return l'orientation dans lequel il se trouve
-	 * Permet de savoir l'angle dans lequel se trouve le robot
-	 */
-	public int getAngle () {
-		return orientation;
-	}
-
-	/**
-	 * @author clémence
+	 * @author clemence
 	 * @param angle angle de la nouvelle position
-	 * Entre la nouvelle position que doit avoir le robot et s'oriente vers lui
+	 * Objectif de la methode : Entre la nouvelle position que doit avoir le robot et s'oriente vers celle-ci
 	 */
-	public void orienter (int angle) { 
+	public void orienter (int angle){ 
 		if(angle<0) {
 			orientation=((360+orientation)+angle)%360;
 		}
@@ -40,12 +31,13 @@ public class Boussole {
 	}
 
 	/**
-	 * @author clémence
-	 * @param angle
-	 * @return retourne la différence entre l'ancien angle et le nouvel angle
-	 * Donne à orientation un nouvel angle
+	 * @author clemence
+	 * @param angle Position actulle
+	 * @return Retourne la difference entre l'orientation actuelle et le nouvel angle entre en parametre
+	 * Objectif : actualiser l'orientation et retourner de combien il a besoin de tourner pour se trouver d'un l'angle mis parametre
+	 * Utilisee par : trouverNord(DuoDeRouesSynchro roues), trouverSud(DuoDeRouesSynchro roues), trouverEst(DuoDeRouesSynchro roues), trouverOuest(DuoDeRouesSynchro roues)
 	 */
-	public int nouvelAngle (int angle) { 
+	public int nouvelAngle(int angle){ 
 		int orien2=orientation;
 		orientation=angle;
 		int res = orien2-angle;
@@ -53,46 +45,54 @@ public class Boussole {
 	}
 
 	/**
-	 * @author clémence
-	 * @param t représente les deux roues qui vont tourner
-	 * Oriente le robot vers le nord
+	 * @author clemence
+	 * @param roues les deux-roues synchronisee
+	 * Objectif : quelle que soit l'orientation du robot, l'oriente vers le nord
+	 * Utilisee par : recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole)
+	 * Utilise : nouvelAngle(int angle),setspeed(int vitesse),rotateAsynchG(int angle,int temps)
 	 */
-	public void trouverNord (DuoDeRouesSynchro t) {
+	public void trouverNord (DuoDeRouesSynchro roues){
 		int res = nouvelAngle(nord);
-		t.setspeed(350);
-		t.rotateAsynchG(-res*200/90,2000);
+		roues.setspeed(350);
+		roues.rotateAsynchG(-res*200/90,2000);
 	}
 
 	/**
-	 * @author clémence
-	 * @param t représente les deux roues qui vont tourner
-	 * Oriente le robot vers le sud
+	 * @author clemence
+	 * @param roues les deux-roues synchronisee
+	 * Objectif : quelle que soit l'orientation du robot, l'oriente vers le sud
+	 * Utilisee par : recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole)
+	 * Utilise : nouvelAngle(int angle),setspeed(int vitesse),rotateAsynchG(int angle,int temps) 
 	 */
-	public void trouverSud (DuoDeRouesSynchro t) {
+	public void trouverSud (DuoDeRouesSynchro roues){
 		int res = nouvelAngle(sud);
-		t.setspeed(350);
-		t.rotateAsynchG(-res*200/90,2000);
+		roues.setspeed(350);
+		roues.rotateAsynchG(-res*200/90,2000);
 	}
 
 	/**
-	 * @author clémence
-	 * @param t représente les deux roues qui vont tourner
-	 * Oriente le robot vers l'est
+	 * @author clemence
+	 * @param roues les deux-roues synchronisee
+	 * Objectif : quelle que soit l'orientation du robot, l'oriente vers l'est
+	 * Utilisee par : recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole)
+	 * Utilise : nouvelAngle(int angle),setspeed(int vitesse),rotateAsynchG(int angle,int temps) 
 	 */
-	public void trouverEst (DuoDeRouesSynchro t) {
+	public void trouverEst (DuoDeRouesSynchro roues){
 		int res = nouvelAngle(est);
-		t.setspeed(350);
-		t.rotateAsynchG(-res*200/90,2000);
+		roues.setspeed(350);
+		roues.rotateAsynchG(-res*200/90,2000);
 	}
 
 	/**
-	 * @author clémence
-	 * @param t représente les deux roues qui vont tourner
-	 * Oriente le robot vers l'ouest
+	 * @author clemence
+	 * @param roues les deux-roues synchronisee
+	 * Objectif : quelle que soit l'orientation du robot, l'oriente vers l'ouest
+	 * Utilisee par : recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole)
+	 * Utilise : nouvelAngle(int angle),setspeed(int vitesse),rotateAsynchG(int angle,int temps) 
 	 */
-	public void trouverOuest (DuoDeRouesSynchro t) {
+	public void trouverOuest (DuoDeRouesSynchro roues){
 		int res = nouvelAngle(ouest);
-		t.setspeed(350);
-		t.rotateAsynchG(-res*200/90,2000);
+		roues.setspeed(350);
+		roues.rotateAsynchG(-res*200/90,2000);
 	}
 }

@@ -1,4 +1,5 @@
 import java.io.IOException;
+
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
@@ -21,8 +22,9 @@ public class CaptTactile extends EV3TouchSensor{
 
 	/**
 	 * @author margaux
-	 * @return true si  le capteur est presse, false sinon
-	 * Return si la capteur est presse ou non
+	 * @return true Si le capteur est presse, false sinon
+	 * Objectif : Retourne une information sur la situation du capteur (s'il est actif ou non)
+	 * Utilisee par:avanceJusquePalet(DuoDeRouesSynchro roues,char cotes)
 	 */
 	public boolean isPressed(){
 		float[] sample = new float[1];
@@ -33,7 +35,8 @@ public class CaptTactile extends EV3TouchSensor{
 
 	/**
 	 * @author mathieu
-	 * Ouvre les pinces
+	 * Objectif: Ouvre les pinces d'un espace necessaire et suffisant pour recuperer un palet
+	 * Utilisee par: avancerJusquePalet(DuoDeRouesSynchro roues,char cotes), posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
 	 */
 	public void OuvertureDesPinces(){
 		pinces.forward();
@@ -43,7 +46,8 @@ public class CaptTactile extends EV3TouchSensor{
 
 	/**
 	 * @author mathieu
-	 * Ferme les pinces
+	 * Objectif: Referme les pince suffisamment pour garder les palets en possession
+	 * Utilisee par: avancerJusquePalet(DuoDeRouesSynchro roues,char cotes), posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
 	 */
 	public void FermetureDesPinces(){
 		pinces.backward();
@@ -56,7 +60,9 @@ public class CaptTactile extends EV3TouchSensor{
 	 * @param roues duo de toues synchronisé
 	 * @param cotes cotes duquel se trouve le robot
 	 * @return true si un un palet a ete recupere false sinon
-	 * Avance jusqu a un palet et return si il a bien eu un palet ou si il y en avait pas
+	 * Objetif: Avance jusqu a un palet et return si il a bien eu un palet ou si il y en avait pas
+	 * Utilisee par:recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole), DetectionDunObjetG(CaptTactile capt,char cotes),DetectionDunObjetD(CaptTactile capt,char cotes)
+	 * Utilise:OuvertureDesPinces(),avancer(), isPresed(),FermetureDesPinces()
 	 */
 	public boolean avancerJusquePalet(DuoDeRouesSynchro roues,char cotes) {
 
@@ -82,7 +88,10 @@ public class CaptTactile extends EV3TouchSensor{
 	 * @param cotes cotes de départ du robot
 	 * @param boussole la boussole du robot
 	 * @throws IOException
-	 * Recupere le palet et le rammène dans le camp adverse (pour le premier)
+	 * Objectif: Recupere le palet et le rammène dans le camp adverse (pour le premier)
+	 * Utilise : AvancerTantQue(double float, LAvue vue), avancerJusquePalet(DuoDeRouesSynchro roues,char cotes)
+	 * 			trouverNord(DuoDeRouesSynchro roues), trouverOuest(DuoDeRouesSynchro roues),
+	 * 			trouverSud(DuoDeRouesSynchro roues), trouverEst(DuoDeRouesSynchro roues)
 	 */
 	public void recupPremierPalet(Vehicule vehicule,char cotes,Boussole boussole) throws IOException {
 

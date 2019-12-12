@@ -4,7 +4,6 @@ import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.Font;
 import lejos.hardware.lcd.GraphicsLCD;
-import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
 import lejos.robotics.SampleProvider;
@@ -20,8 +19,7 @@ public class TestColor {
 
 	/**
 	 * @author margaux
-	 * @param port port ou est le capteur couleur
-	 * @param capteurCouleur la variable du capteur couleur
+	 * @param capteurCouleur : la variable du capteur couleur
 	 * Constructeur de la classe TestColor
 	 */
 	public TestColor(EV3ColorSensor capteurCouleur) {
@@ -79,7 +77,8 @@ public class TestColor {
 	/**
 	 * @author margaux
 	 * @throws IOException
-	 * Initialise les vecteurs couleur de chaque couleurs de la table et les stocks dans un properties
+	 * Objectif: Initialiser les couleurs de reference (generees par un vecteur) et les stocker dans un fichier cree sous forme de map avec une cle et sa valeur associee
+	 * 
 	 */
 	public static void colorimetrie() throws IOException {
 		OutputStream fichier= new FileOutputStream("Couleurs");
@@ -139,7 +138,8 @@ public class TestColor {
 	/**
 	 * @author margaux
 	 * @return un tableau contenant les couleur vu
-	 * Capte une couleur et met sa veleur en float dans un tableau
+	 * Objectif: Capter une couleur et mettre sa valeur en float dans un tableau
+	 * Utilisee par : posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
 	 */
 	public static float[] getEchant() {
 		SampleProvider average = new MeanFilter(colorSensor.getRGBMode(), 1);
@@ -150,11 +150,14 @@ public class TestColor {
 
 	/**
 	 * @author margaux
-	 * @param prop map contenant les couleurs de référence
-	 * @param sample tabealu contenant la couleur percu
-	 * @return Une strng de la couleur la plus proche de celle percu
+	 * @param prop :map contenant les couleurs de référence
+	 * @param sample: tableau contenant la couleur percu
+	 * @return Une string de la couleur la plus proche de celle percue
 	 * @throws IOException
-	 * Prend les properties de chaques couleur, les mets dans des tableaux différents et les compares avec les couleurs de référence et renvoie la couleur la plus proche de celle vue
+	 * Objectif: Prendre les valeurs correpondant a chaque couleur dans la map, les mettres dans des tableaux différents
+	 * 			Ensuite calculer le vecteur de la couleur percue en temps reel et de la couleur de reference et selon la valeur du vecteur renvoye la couleur vue
+	 * Utilisee par: posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole)
+	 * Utilise : scalaire(float[]v1, float[] v2)
 	 */
 	public static String getColor(Properties prop, float[] sample) throws IOException {
 
@@ -253,6 +256,7 @@ public class TestColor {
 	 * @param v1 couleur percu
 	 * @param v2 couleur de reference
 	 * @return la valeur de la différence des vecteur
+	 * Objectif: retourner un scalaire de vecteur
 	 */
 	public static double scalaire(float[] v1, float[] v2) {
 		return Math.sqrt (Math.pow(v1[0] - v2[0], 2.0) +
@@ -262,13 +266,14 @@ public class TestColor {
 
 	/**
 	 * @author margaux
-	 * @param prop,map contenant les couleurs de référence (clé=String couleur et valeur= valeurs RGB de la couleur)
-	 * @param vehicule duo de roues synghronisées
-	 * @param capt capteur tactile
-	 * @param cotes cote du jeu ou se trouve le robot au debut
-	 * @param boussole, la boussole du robot
+	 * @param prop : map contenant les couleurs de référence (clé=String couleur et valeur= valeurs RGB de la couleur)
+	 * @param vehicule: duo de roues synghronisées
+	 * @param capt: capteur tactile
+	 * @param cotes: cote du jeu ou se trouve le robot au debut
+	 * @param boussole: la boussole du robot
 	 * @throws IOException
-	 * ammène le palet au camp adversaire, ouvre les pinces lorsqu'il perçoit la ligne blanche
+	 * Objectif: ammener le palet au camp adversaire, ouvrir les pinces lorsqu'il perçoit la ligne blanche
+	 * Utilisee par: 
 	 */
 	public void posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole) throws IOException{
 
@@ -285,7 +290,7 @@ public class TestColor {
 				Delay.msDelay(3000);
 				float vue2 =vehicule.vue.getDistance();
 				if (vue1-vue2<=0.02)
-					//il faut trouver l'est ou l'ouest avec la boussole au lieu de le faire tourner comme ca
+					//il faudrait trouver l'est ou l'ouest avec la boussole au lieu de le faire tourner comme ca
 					vehicule.roues.rotateAsynchG(-90,1000);
 				Delay.msDelay(1000);
 				vehicule.roues.avancer();
