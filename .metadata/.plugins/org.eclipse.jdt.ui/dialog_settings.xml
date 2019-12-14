@@ -71,7 +71,13 @@
 		<item key="source" value="1.7"/>
 		<item key="antpath" value="C:\Users\mathieu\Documents\GitHub\EVE\Eve\javadoc.xml"/>
 		<item key="destdir" value="C:\Users\mathieu\Documents\GitHub\EVE\Eve\doc"/>
+		<item key="doctitle" value="JAVA DOC"/>
 		<section name="projects">
+			<section name="Eve">
+				<item key="href" value="https://docs.oracle.com/en/java/javase/12/docs/api/;file:/C:/Users/mathieu/Documents/GitHub/EVE/Eve/doc/"/>
+				<item key="destdir" value="C:\Users\mathieu\Documents\GitHub\EVE\Eve\doc"/>
+				<item key="antpath" value="C:\Users\mathieu\Documents\GitHub\EVE\Eve\javadoc.xml"/>
+			</section>
 		</section>
 	</section>
 </section>
