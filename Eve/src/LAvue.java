@@ -1,31 +1,33 @@
-import lejos.hardware.Button;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.SensorPort;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
-import lejos.utility.Delay;
-
-
 public class LAvue extends EV3UltrasonicSensor{
-	public static void main(String[] args) {
-			
-			//info pour moi pour afficher en continue 
-			//Delay.msDelay(500);
-			//System.out.println(vue.getDistance());
-		}
-	
-	
+
+	/**
+	 * @author mathieu
+	 * @param port port ou est branche le capteur ultrason
+	 * Constructeur de la classe LAvue
+	 */
 	public LAvue(Port port){
 		super(port);
 	}
-	
+
+	/**
+	 * @author mathieu
+	 * @return retourne la distance à laquelle est situé l'obstacle le plus proche
+	 * Objectif : Recuperer la distance a laquelle est l'objet le plus proche
+	 * Utilisee par posePaletCamp(Properties prop,Vehicule vehicule, CaptTactile capt,char cotes,Boussole boussole),
+	 * 				AvancerTantQue(double f, LAvue vue), PALET(),
+	 * 				DetectionDunObjetG(CaptTactile capt,char cotes),DetectionDunObjetD(CaptTactile capt,char cotes)
+	 */
 	public float getDistance() {
-		SampleProvider distance= this.getMode("Distance");
-		float[] sample = new float[distance.sampleSize()];
-		distance.fetchSample(sample, 0);
-		 return sample[0];
+	SampleProvider distance= this.getMode("Distance");
+	float[] sample = new float[distance.sampleSize()];
+	distance.fetchSample(sample, 0);
+	if(sample[0] == 0)
+		return 100;
+
+	else
+		return sample[0];
 	}
 }
